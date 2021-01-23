@@ -30,7 +30,7 @@
         android:layout_marginEnd="16dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/redimi" />
+        app:srcCompat="@mipmap/redmi" />
 
     <ImageView
         android:id="@+id/order_indicator"
