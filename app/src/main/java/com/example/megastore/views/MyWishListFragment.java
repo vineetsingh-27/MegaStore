@@ -44,7 +44,7 @@ public class MyWishListFragment extends Fragment {
         wishListModelList.add(new WishListModel(R.drawable.redimi,"Redmi 5A",0,"5",45,"Rs.49999/-","Rs.54999/-","Cash On Delivery"));
         wishListModelList.add(new WishListModel(R.drawable.redimi,"Redmi 5A",3,"2",55,"Rs.49999/-","Rs.54999/-","Online Delivery"));
 
-        WishListAdapter wishListAdapter = new WishListAdapter(wishListModelList);
+        WishListAdapter wishListAdapter = new WishListAdapter(wishListModelList,true);
         wishListRecyclerView.setAdapter(wishListAdapter);
         wishListAdapter.notifyDataSetChanged();
 

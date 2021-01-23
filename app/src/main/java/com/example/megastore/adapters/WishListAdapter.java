@@ -1,5 +1,6 @@
 package com.example.megastore.adapters;
 
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,15 +14,18 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.megastore.R;
 import com.example.megastore.model.WishListModel;
+import com.example.megastore.views.ProductDetailsActivity;
 
 import java.util.List;
 
 public class WishListAdapter extends RecyclerView.Adapter<WishListAdapter.ViewHolder> {
 
     private List<WishListModel> wishListModelList;
+    private Boolean wishList;
 
-    public WishListAdapter(List<WishListModel> wishListModelList) {
+    public WishListAdapter(List<WishListModel> wishListModelList, Boolean wishList) {
         this.wishListModelList = wishListModelList;
+        this.wishList = wishList;
     }
 
     @NonNull
@@ -41,7 +45,7 @@ public class WishListAdapter extends RecyclerView.Adapter<WishListAdapter.ViewHo
         String productPrice = wishListModelList.get(position).getProductPrice();
         String cuttedPrice = wishListModelList.get(position).getCuttedPrice();
         String paymentMethod = wishListModelList.get(position).getPaymentMethod();
-        holder.setData(resource,title,freeCoupons,rating,totalRatings,productPrice,cuttedPrice,paymentMethod);
+        holder.setData(resource, title, freeCoupons, rating, totalRatings, productPrice, cuttedPrice, paymentMethod);
     }
 
     @Override
@@ -99,10 +103,23 @@ public class WishListAdapter extends RecyclerView.Adapter<WishListAdapter.ViewHo
             cuttedPrice.setText(cuttedPriceValue);
             paymentMethod.setText(payMethod);
 
+            if (wishList) {
+                deleteBtn.setVisibility(View.VISIBLE);
+            } else {
+                deleteBtn.setVisibility(View.GONE);
+            }
             deleteBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     Toast.makeText(itemView.getContext(), "delete", Toast.LENGTH_SHORT).show();
+                }
+            });
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent productDetailsIntent = new Intent(itemView.getContext(), ProductDetailsActivity.class);
+                    itemView.getContext().startActivity(productDetailsIntent);
                 }
             });
         }

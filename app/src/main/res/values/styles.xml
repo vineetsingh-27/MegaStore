@@ -23,7 +23,6 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorPrimary</item>
-        <item name="android:windowBackground">@drawable/splash_activity_background</item>
     </style>
 
 </resources>

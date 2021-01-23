@@ -11,7 +11,13 @@
         android:roundIcon="@mipmap/app_icon_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".views.OrderDetailsActivity"></activity>
+        <activity android:name=".views.ViewAllActivity"></activity>
+        <activity android:name=".views.MyAddressActivity" />
+        <activity
+            android:name=".views.AddressActivity"
+            android:theme="@style/BlueProgressBar" />
+        <activity android:name=".views.DeliveryActivity" />
+        <activity android:name=".views.OrderDetailsActivity" />
         <activity android:name=".views.ProductDetailsActivity" />
         <activity android:name=".views.CategoryActivity" />
         <activity

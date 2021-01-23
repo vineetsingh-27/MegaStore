@@ -1,13 +1,16 @@
 package com.example.megastore.views;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.viewpager.widget.ViewPager;
 
 import com.example.megastore.R;
 import com.example.megastore.adapters.CategoryAdapter;
@@ -19,6 +22,8 @@ import com.example.megastore.model.SliderModel;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class HomeFragment extends Fragment {
 
@@ -29,6 +34,7 @@ public class HomeFragment extends Fragment {
     private RecyclerView categoryRecyclerView;
     private CategoryAdapter categoryAdapter;
     private RecyclerView testing;
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -65,19 +71,13 @@ public class HomeFragment extends Fragment {
         List<SliderModel> sliderModelList = new ArrayList<>();
 
         sliderModelList.add(new SliderModel(R.drawable.ic_email_green, "#077AE4"));
-        sliderModelList.add(new SliderModel(R.drawable.user, "#077AE4"));
-        sliderModelList.add(new SliderModel(R.drawable.ic_email_green, "#077AE4"));
-
-        sliderModelList.add(new SliderModel(R.drawable.ic_shopping_cart_24, "#077AE4"));
-        sliderModelList.add(new SliderModel(R.drawable.ic_home_black_24, "#077AE4"));
+        sliderModelList.add(new SliderModel(R.drawable.ic_email_red, "#077AE4"));
         sliderModelList.add(new SliderModel(R.drawable.ic_order_24, "#077AE4"));
-        sliderModelList.add(new SliderModel(R.drawable.ic_wishlist_24, "#077AE4"));
+        sliderModelList.add(new SliderModel(R.drawable.ic_shopping_cart_24, "#077AE4"));
         sliderModelList.add(new SliderModel(R.drawable.banner, "#077AE4"));
         sliderModelList.add(new SliderModel(R.drawable.ic_wishlist_24, "#077AE4"));
-
-        sliderModelList.add(new SliderModel(R.drawable.user, "#077AE4"));
-        sliderModelList.add(new SliderModel(R.drawable.ic_email_green, "#077AE4"));
-        sliderModelList.add(new SliderModel(R.drawable.ic_shopping_cart_24, "#077AE4"));
+        sliderModelList.add(new SliderModel(R.drawable.ic_card_rewards_24, "#077AE4"));
+        sliderModelList.add(new SliderModel(R.drawable.ic_home_black_24, "#077AE4"));
 
         ////////////////Banner Slider
 
@@ -85,6 +85,9 @@ public class HomeFragment extends Fragment {
         //////////Horizontal Product Layout
         List<HorizontalProductScrollModel> horizontalProductScrollModelList = new ArrayList<>();
 
+        horizontalProductScrollModelList.add(new HorizontalProductScrollModel(R.drawable.redimi, "Redimi 5A", "SD 625 Processor", "Rs.5999/-"));
+        horizontalProductScrollModelList.add(new HorizontalProductScrollModel(R.drawable.redimi, "Redimi 5A", "SD 625 Processor", "Rs.5999/-"));
+        horizontalProductScrollModelList.add(new HorizontalProductScrollModel(R.drawable.redimi, "Redimi 5A", "SD 625 Processor", "Rs.5999/-"));
         horizontalProductScrollModelList.add(new HorizontalProductScrollModel(R.drawable.redimi, "Redimi 5A", "SD 625 Processor", "Rs.5999/-"));
         horizontalProductScrollModelList.add(new HorizontalProductScrollModel(R.drawable.redimi, "Redimi 5A", "SD 625 Processor", "Rs.5999/-"));
         horizontalProductScrollModelList.add(new HorizontalProductScrollModel(R.drawable.redimi, "Redimi 5A", "SD 625 Processor", "Rs.5999/-"));
@@ -103,6 +106,14 @@ public class HomeFragment extends Fragment {
         testing.setLayoutManager(testingLayoutManager);
 
         List<HomePageModel> homePageModelList = new ArrayList<>();
+        homePageModelList.add(new HomePageModel(0, sliderModelList));
+        homePageModelList.add(new HomePageModel(1, R.drawable.banner, "#000000"));
+        homePageModelList.add(new HomePageModel(2, "Deals of the day", horizontalProductScrollModelList));
+        homePageModelList.add(new HomePageModel(3, "Deals of the day", horizontalProductScrollModelList));
+        homePageModelList.add(new HomePageModel(0, sliderModelList));
+        homePageModelList.add(new HomePageModel(1, R.drawable.banner, "#FFFFFF"));
+        homePageModelList.add(new HomePageModel(0, sliderModelList));
+        homePageModelList.add(new HomePageModel(1, R.drawable.banner, "#E4E4E4"));
         homePageModelList.add(new HomePageModel(0, sliderModelList));
         homePageModelList.add(new HomePageModel(1, R.drawable.banner, "#000000"));
         homePageModelList.add(new HomePageModel(2, "Deals of the day", horizontalProductScrollModelList));

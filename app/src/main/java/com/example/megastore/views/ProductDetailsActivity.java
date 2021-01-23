@@ -5,12 +5,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.viewpager.widget.ViewPager;
 
+import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
@@ -23,6 +25,8 @@ import com.google.android.material.tabs.TabLayout;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.example.megastore.views.MainActivity.showCart;
+
 public class ProductDetailsActivity extends AppCompatActivity {
 
     private ViewPager productImagesViewPager;
@@ -34,6 +38,8 @@ public class ProductDetailsActivity extends AppCompatActivity {
     ///////rating layout
     private LinearLayout rateNowContainer;
     ///////rating layout
+
+    private Button buyNowBtn;
 
     private FloatingActionButton addToWishListButton;
     private static boolean ALREADY_ADDED_TO_WISHLIST = false;
@@ -54,6 +60,8 @@ public class ProductDetailsActivity extends AppCompatActivity {
 
         productDetailsViewPager = findViewById(R.id.product_details_viewpager);
         productDetailsTabLayout = findViewById(R.id.product_details_tab_layout);
+
+        buyNowBtn = findViewById(R.id.but_now_button);
 
         List<Integer> productImages = new ArrayList<>();
         productImages.add(R.drawable.banner);
@@ -108,6 +116,14 @@ public class ProductDetailsActivity extends AppCompatActivity {
             });
         }
         ///////rating layout
+
+        buyNowBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent deliveryIntent = new Intent(ProductDetailsActivity.this,DeliveryActivity.class);
+                startActivity(deliveryIntent);
+            }
+        });
     }
 
     private void setRating(int starPosition) {
@@ -139,6 +155,9 @@ public class ProductDetailsActivity extends AppCompatActivity {
         } else if (id == R.id.main_cart_icon) {
             //todo: cart
             // myCart();
+            Intent cartIntent = new Intent(ProductDetailsActivity.this,MainActivity.class);
+            showCart = true;
+            startActivity(cartIntent);
             return true;
         }
         return super.onOptionsItemSelected(item);
