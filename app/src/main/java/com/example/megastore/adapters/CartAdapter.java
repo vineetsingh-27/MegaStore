@@ -1,8 +1,12 @@
 package com.example.megastore.adapters;
 
+import android.app.Dialog;
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -131,6 +135,35 @@ public class CartAdapter extends RecyclerView.Adapter {
             } else {
                 offerApplied.setVisibility(View.INVISIBLE);
             }
+            productQuantity.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    final Dialog quantityDialog = new Dialog(itemView.getContext());
+                    quantityDialog.setContentView(R.layout.quantity_dialog);
+                    quantityDialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.WRAP_CONTENT);
+                    quantityDialog.setCancelable(false);
+
+                    final EditText quantityNumber = quantityDialog.findViewById(R.id.quantity_number);
+                    Button cancelBtn = quantityDialog.findViewById(R.id.cancelBtn);
+                    Button okBtn = quantityDialog.findViewById(R.id.okBtn);
+
+                    cancelBtn.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            quantityDialog.dismiss();
+                        }
+                    });
+
+                    okBtn.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            productQuantity.setText("Qty: "+ quantityNumber.getText());
+                            quantityDialog.dismiss();
+                        }
+                    });
+                    quantityDialog.show();
+                }
+            });
         }
     }
 

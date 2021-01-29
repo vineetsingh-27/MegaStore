@@ -37,58 +37,13 @@ public class CategoryActivity extends AppCompatActivity {
 
         categoryRecyclerView = findViewById(R.id.category_recycler_view);
 
-        ////////////Banner Slider ViewPager
-        /**
-         * Trick used for infinite scrolling
-         */
-        List<SliderModel> sliderModelList = new ArrayList<>();
 
-        sliderModelList.add(new SliderModel(R.drawable.ic_wishlist_24, "#077AE4"));
-        sliderModelList.add(new SliderModel(R.drawable.user, "#077AE4"));
-        sliderModelList.add(new SliderModel(R.drawable.ic_email_green, "#077AE4"));
-
-        sliderModelList.add(new SliderModel(R.drawable.ic_shopping_cart_24, "#077AE4"));
-        sliderModelList.add(new SliderModel(R.drawable.ic_home_black_24, "#077AE4"));
-        sliderModelList.add(new SliderModel(R.drawable.ic_order_24, "#077AE4"));
-        sliderModelList.add(new SliderModel(R.drawable.ic_wishlist_24, "#077AE4"));
-        sliderModelList.add(new SliderModel(R.drawable.banner, "#077AE4"));
-        sliderModelList.add(new SliderModel(R.drawable.ic_wishlist_24, "#077AE4"));
-
-        sliderModelList.add(new SliderModel(R.drawable.user, "#077AE4"));
-        sliderModelList.add(new SliderModel(R.drawable.ic_email_green, "#077AE4"));
-        sliderModelList.add(new SliderModel(R.drawable.ic_shopping_cart_24, "#077AE4"));
-
-        ////////////Banner Slider ViewPager
-
-
-        /////////Horizontal Product Layout
-        List<HorizontalProductScrollModel> horizontalProductScrollModelList = new ArrayList<>();
-        horizontalProductScrollModelList.add(new HorizontalProductScrollModel(R.drawable.redimi, "Redmi note 8 pro", "Mt Helios G90T", "Rs.17999/-"));
-        horizontalProductScrollModelList.add(new HorizontalProductScrollModel(R.drawable.redimi, "Redmi note 8 pro", "Mt Helios G90T", "Rs.17999/-"));
-        horizontalProductScrollModelList.add(new HorizontalProductScrollModel(R.drawable.redimi, "Redmi note 8 pro", "Mt Helios G90T", "Rs.17999/-"));
-        horizontalProductScrollModelList.add(new HorizontalProductScrollModel(R.drawable.redimi, "Redmi note 8 pro", "Mt Helios G90T", "Rs.17999/-"));
-        horizontalProductScrollModelList.add(new HorizontalProductScrollModel(R.drawable.redimi, "Redmi note 8 pro", "Mt Helios G90T", "Rs.17999/-"));
-        horizontalProductScrollModelList.add(new HorizontalProductScrollModel(R.drawable.redimi, "Redmi note 8 pro", "Mt Helios G90T", "Rs.17999/-"));
-        horizontalProductScrollModelList.add(new HorizontalProductScrollModel(R.drawable.redimi, "Redmi note 8 pro", "Mt Helios G90T", "Rs.17999/-"));
-        horizontalProductScrollModelList.add(new HorizontalProductScrollModel(R.drawable.redimi, "Redmi note 8 pro", "Mt Helios G90T", "Rs.17999/-"));
-        /////////Horizontal Product Layout
-
-
-        ///////////////////////////
         LinearLayoutManager testingLayoutManager = new LinearLayoutManager(this);
         testingLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         categoryRecyclerView.setLayoutManager(testingLayoutManager);
 
-        List<HomePageModel> homePageModelList = new ArrayList<>();
-        homePageModelList.add(new HomePageModel(0, sliderModelList));
-        homePageModelList.add(new HomePageModel(1, R.drawable.banner, "#000000"));
-        homePageModelList.add(new HomePageModel(2, "Deals of the day", horizontalProductScrollModelList));
-        homePageModelList.add(new HomePageModel(3, "Deals of the day", horizontalProductScrollModelList));
-        homePageModelList.add(new HomePageModel(0, sliderModelList));
-        homePageModelList.add(new HomePageModel(1, R.drawable.banner, "#FFFFFF"));
-        homePageModelList.add(new HomePageModel(0, sliderModelList));
-        homePageModelList.add(new HomePageModel(1, R.drawable.banner, "#E4E4E4"));
 
+        List<HomePageModel> homePageModelList = new ArrayList<>();
         HomePageAdapter homePageAdapter = new HomePageAdapter(homePageModelList);
         categoryRecyclerView.setAdapter(homePageAdapter);
         homePageAdapter.notifyDataSetChanged();

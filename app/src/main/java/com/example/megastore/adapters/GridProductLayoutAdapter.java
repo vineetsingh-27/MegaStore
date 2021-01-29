@@ -9,6 +9,8 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.example.megastore.R;
 import com.example.megastore.model.HorizontalProductScrollModel;
 import com.example.megastore.views.ProductDetailsActivity;
@@ -60,10 +62,10 @@ public class GridProductLayoutAdapter extends BaseAdapter {
             TextView productDescription = view.findViewById(R.id.h_s_product_description);
             TextView productPrice = view.findViewById(R.id.h_s_product_price);
 
-            productImage.setImageResource(horizontalProductScrollModelList.get(position).getProductImage());
+            Glide.with(parent.getContext()).load(horizontalProductScrollModelList.get(position).getProductImage()).apply(new RequestOptions().placeholder(R.drawable.home)).into(productImage);
             productTitle.setText(horizontalProductScrollModelList.get(position).getProductTitle());
-            productDescription.setText(horizontalProductScrollModelList.get(position).getProductTitle());
-            productPrice.setText(horizontalProductScrollModelList.get(position).getProductPrice());
+            productDescription.setText(horizontalProductScrollModelList.get(position).getProductDescription());
+            productPrice.setText("Rs." + horizontalProductScrollModelList.get(position).getProductPrice() + "/-");
         } else {
             view = convertView;
         }

@@ -1,15 +1,23 @@
 package com.example.megastore.views;
 
+import android.app.Dialog;
+import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Menu;
+import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 
+import com.bumptech.glide.Glide;
 import com.example.megastore.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
@@ -28,8 +36,9 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import static com.example.megastore.views.RegisterActivity.setSignUpFragment;
+
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
-    private FrameLayout frameLayout;
     private static final int HOME_FRAGMENT = 0;
     private static final int CART_FRAGMENT = 1;
     private static final int MY_ORDER_FRAGMENT = 2;
@@ -38,6 +47,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public static final int MY_ACCOUNT_FRAGMENT = 5;
     public static Boolean showCart = false;
 
+    private FrameLayout frameLayout;
+    private ImageView noInternetConnection;
     private int currentFragment = -1;
     private NavigationView navigationView;
     private ImageView actionBarLogo;
@@ -121,7 +132,37 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             return true;
         } else if (id == R.id.main_cart_icon) {
             //todo: cart
-            goToFragment("My Cart", new MyCartFragment(), CART_FRAGMENT);
+            final Dialog signInDialog = new Dialog(MainActivity.this);
+            signInDialog.setContentView(R.layout.sign_in_dialog);
+            signInDialog.setCancelable(true);
+            signInDialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+
+            Button dialogSignInBtn = signInDialog.findViewById(R.id.sign_in_btn);
+            Button dialogSignUpBtn = signInDialog.findViewById(R.id.sign_up_btn);
+
+            final Intent registerIntent = new Intent(MainActivity.this, RegisterActivity.class);
+
+            dialogSignInBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    signInDialog.dismiss();
+                    setSignUpFragment = false;
+                    startActivity(registerIntent);
+                }
+            });
+
+            dialogSignUpBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    signInDialog.dismiss();
+                    setSignUpFragment = true;
+                    startActivity(registerIntent);
+                }
+            });
+
+            signInDialog.show();
+
+            //goToFragment("My Cart", new MyCartFragment(), CART_FRAGMENT);
             return true;
         } else if (id == android.R.id.home) {
             if (showCart) {
@@ -145,7 +186,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             goToFragment("My Order", new MyOrdersFragment(), MY_ORDER_FRAGMENT);
         } else if (id == R.id.nav_my_rewards) {
             goToFragment("My Rewards", new MyRewardsFragment(), MY_REWARDS_FRAGMENT);
-
         } else if (id == R.id.nav_my_cart) {
             goToFragment("My Cart", new MyCartFragment(), CART_FRAGMENT);
         } else if (id == R.id.nav_my_wishList) {

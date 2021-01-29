@@ -1,29 +1,27 @@
 package com.example.megastore.views;
 
+import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
-import android.os.Handler;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.viewpager.widget.ViewPager;
 
+import com.bumptech.glide.Glide;
 import com.example.megastore.R;
 import com.example.megastore.adapters.CategoryAdapter;
 import com.example.megastore.adapters.HomePageAdapter;
-import com.example.megastore.model.CategoryModel;
-import com.example.megastore.model.HomePageModel;
-import com.example.megastore.model.HorizontalProductScrollModel;
-import com.example.megastore.model.SliderModel;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Timer;
-import java.util.TimerTask;
+import static com.example.megastore.views.DBQueries.categoryModelList;
+import static com.example.megastore.views.DBQueries.homePageModelList;
+import static com.example.megastore.views.DBQueries.loadCategories;
+import static com.example.megastore.views.DBQueries.loadFragmentData;
 
 public class HomeFragment extends Fragment {
 
@@ -33,8 +31,9 @@ public class HomeFragment extends Fragment {
 
     private RecyclerView categoryRecyclerView;
     private CategoryAdapter categoryAdapter;
-    private RecyclerView testing;
-
+    private RecyclerView homePageRecyclerView;
+    private HomePageAdapter adapter;
+    private ImageView noInternetConnection;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -47,86 +46,39 @@ public class HomeFragment extends Fragment {
         // Inflate the layout for this fragment
 
         View view = inflater.inflate(R.layout.fragment_home, container, false);
+        noInternetConnection = view.findViewById(R.id.no_internet_connection);
 
-        categoryRecyclerView = view.findViewById(R.id.category_recycler_view);
+        ConnectivityManager connectivityManager = (ConnectivityManager) getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
+        if (networkInfo != null && networkInfo.isConnected() == true) {
+            noInternetConnection.setVisibility(View.GONE);
 
-        List<CategoryModel> categoryModelList = new ArrayList<>();
-        categoryModelList.add(new CategoryModel("Link", "Home"));
-        categoryModelList.add(new CategoryModel("Link", "Toys"));
-        categoryModelList.add(new CategoryModel("Link", "Shoes"));
-        categoryModelList.add(new CategoryModel("Link", "Electronics"));
-        categoryModelList.add(new CategoryModel("Link", "Appliance"));
-        categoryModelList.add(new CategoryModel("Link", "Appliance1"));
-        categoryModelList.add(new CategoryModel("Link", "Appliance2"));
-        categoryModelList.add(new CategoryModel("Link", "Appliance3"));
-        categoryModelList.add(new CategoryModel("Link", "Appliance4"));
-        categoryModelList.add(new CategoryModel("Link", "Appliance5"));
+            categoryRecyclerView = view.findViewById(R.id.category_recycler_view);
+            categoryAdapter = new CategoryAdapter(categoryModelList);
+            categoryRecyclerView.setAdapter(categoryAdapter);
 
-        categoryAdapter = new CategoryAdapter(categoryModelList);
-        categoryRecyclerView.setAdapter(categoryAdapter);
-        categoryAdapter.notifyDataSetChanged();
+            if (categoryModelList.size() == 0) {
+                loadCategories(categoryAdapter, getContext());
+            } else {
+                categoryAdapter.notifyDataSetChanged();
+            }
 
-        ////////////////Banner Slider
+            homePageRecyclerView = view.findViewById(R.id.home_page_recycler_view);
+            LinearLayoutManager testingLayoutManager = new LinearLayoutManager(getContext());
+            testingLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+            homePageRecyclerView.setLayoutManager(testingLayoutManager);
+            adapter = new HomePageAdapter(homePageModelList);
+            homePageRecyclerView.setAdapter(adapter);
 
-        List<SliderModel> sliderModelList = new ArrayList<>();
-
-        sliderModelList.add(new SliderModel(R.drawable.ic_email_green, "#077AE4"));
-        sliderModelList.add(new SliderModel(R.drawable.ic_email_red, "#077AE4"));
-        sliderModelList.add(new SliderModel(R.drawable.ic_order_24, "#077AE4"));
-        sliderModelList.add(new SliderModel(R.drawable.ic_shopping_cart_24, "#077AE4"));
-        sliderModelList.add(new SliderModel(R.drawable.banner, "#077AE4"));
-        sliderModelList.add(new SliderModel(R.drawable.ic_wishlist_24, "#077AE4"));
-        sliderModelList.add(new SliderModel(R.drawable.ic_card_rewards_24, "#077AE4"));
-        sliderModelList.add(new SliderModel(R.drawable.ic_home_black_24, "#077AE4"));
-
-        ////////////////Banner Slider
-
-
-        //////////Horizontal Product Layout
-        List<HorizontalProductScrollModel> horizontalProductScrollModelList = new ArrayList<>();
-
-        horizontalProductScrollModelList.add(new HorizontalProductScrollModel(R.drawable.redimi, "Redimi 5A", "SD 625 Processor", "Rs.5999/-"));
-        horizontalProductScrollModelList.add(new HorizontalProductScrollModel(R.drawable.redimi, "Redimi 5A", "SD 625 Processor", "Rs.5999/-"));
-        horizontalProductScrollModelList.add(new HorizontalProductScrollModel(R.drawable.redimi, "Redimi 5A", "SD 625 Processor", "Rs.5999/-"));
-        horizontalProductScrollModelList.add(new HorizontalProductScrollModel(R.drawable.redimi, "Redimi 5A", "SD 625 Processor", "Rs.5999/-"));
-        horizontalProductScrollModelList.add(new HorizontalProductScrollModel(R.drawable.redimi, "Redimi 5A", "SD 625 Processor", "Rs.5999/-"));
-        horizontalProductScrollModelList.add(new HorizontalProductScrollModel(R.drawable.redimi, "Redimi 5A", "SD 625 Processor", "Rs.5999/-"));
-        horizontalProductScrollModelList.add(new HorizontalProductScrollModel(R.drawable.redimi, "Redimi 5A", "SD 625 Processor", "Rs.5999/-"));
-        horizontalProductScrollModelList.add(new HorizontalProductScrollModel(R.drawable.redimi, "Redimi 5A", "SD 625 Processor", "Rs.5999/-"));
-        horizontalProductScrollModelList.add(new HorizontalProductScrollModel(R.drawable.redimi, "Redimi 5A", "SD 625 Processor", "Rs.5999/-"));
-
-        //////////Horizontal Product Layout
-
-
-        //////////////////////////////
-
-        testing = view.findViewById(R.id.home_page_recycler_view);
-        LinearLayoutManager testingLayoutManager = new LinearLayoutManager(getContext());
-        testingLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-        testing.setLayoutManager(testingLayoutManager);
-
-        List<HomePageModel> homePageModelList = new ArrayList<>();
-        homePageModelList.add(new HomePageModel(0, sliderModelList));
-        homePageModelList.add(new HomePageModel(1, R.drawable.banner, "#000000"));
-        homePageModelList.add(new HomePageModel(2, "Deals of the day", horizontalProductScrollModelList));
-        homePageModelList.add(new HomePageModel(3, "Deals of the day", horizontalProductScrollModelList));
-        homePageModelList.add(new HomePageModel(0, sliderModelList));
-        homePageModelList.add(new HomePageModel(1, R.drawable.banner, "#FFFFFF"));
-        homePageModelList.add(new HomePageModel(0, sliderModelList));
-        homePageModelList.add(new HomePageModel(1, R.drawable.banner, "#E4E4E4"));
-        homePageModelList.add(new HomePageModel(0, sliderModelList));
-        homePageModelList.add(new HomePageModel(1, R.drawable.banner, "#000000"));
-        homePageModelList.add(new HomePageModel(2, "Deals of the day", horizontalProductScrollModelList));
-        homePageModelList.add(new HomePageModel(3, "Deals of the day", horizontalProductScrollModelList));
-        homePageModelList.add(new HomePageModel(0, sliderModelList));
-        homePageModelList.add(new HomePageModel(1, R.drawable.banner, "#FFFFFF"));
-        homePageModelList.add(new HomePageModel(0, sliderModelList));
-        homePageModelList.add(new HomePageModel(1, R.drawable.banner, "#E4E4E4"));
-
-        HomePageAdapter adapter = new HomePageAdapter(homePageModelList);
-        testing.setAdapter(adapter);
-        adapter.notifyDataSetChanged();
-        //////////////////////////////
+            if (homePageModelList.size() == 0) {
+                loadFragmentData(adapter, getContext());
+            } else {
+                categoryAdapter.notifyDataSetChanged();
+            }
+        } else {
+            Glide.with(this).load(R.drawable.home).into(noInternetConnection);
+            noInternetConnection.setVisibility(View.VISIBLE);
+        }
 
         return view;
     }

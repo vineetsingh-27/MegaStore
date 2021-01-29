@@ -12,6 +12,8 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.example.megastore.R;
 import com.example.megastore.model.WishListModel;
 import com.example.megastore.views.ProductDetailsActivity;
@@ -37,14 +39,14 @@ public class WishListAdapter extends RecyclerView.Adapter<WishListAdapter.ViewHo
 
     @Override
     public void onBindViewHolder(@NonNull WishListAdapter.ViewHolder holder, int position) {
-        int resource = wishListModelList.get(position).getProductImage();
+        String resource = wishListModelList.get(position).getProductImage();
         String title = wishListModelList.get(position).getProductTitle();
-        int freeCoupons = wishListModelList.get(position).getFreeCoupons();
+        long freeCoupons = wishListModelList.get(position).getFreeCoupons();
         String rating = wishListModelList.get(position).getRating();
-        int totalRatings = wishListModelList.get(position).getTotalRatings();
+        long totalRatings = wishListModelList.get(position).getTotalRatings();
         String productPrice = wishListModelList.get(position).getProductPrice();
         String cuttedPrice = wishListModelList.get(position).getCuttedPrice();
-        String paymentMethod = wishListModelList.get(position).getPaymentMethod();
+        boolean paymentMethod = wishListModelList.get(position).isPaymentMethod();
         holder.setData(resource, title, freeCoupons, rating, totalRatings, productPrice, cuttedPrice, paymentMethod);
     }
 
@@ -83,8 +85,8 @@ public class WishListAdapter extends RecyclerView.Adapter<WishListAdapter.ViewHo
             paymentMethod = itemView.findViewById(R.id.payment_method);
         }
 
-        private void setData(int resource, String title, int freeCouponsNo, String averageRate, int totalRatingNo, String price, String cuttedPriceValue, String payMethod) {
-            productImage.setImageResource(resource);
+        private void setData(String resource, String title, long freeCouponsNo, String averageRate, long totalRatingNo, String price, String cuttedPriceValue, boolean payMethod) {
+            Glide.with(itemView.getContext()).load(resource).apply(new RequestOptions().placeholder(R.drawable.home)).into(productImage);
             productTitle.setText(title);
             if (freeCouponsNo != 0) {
                 couponIcon.setVisibility(View.VISIBLE);
@@ -98,10 +100,14 @@ public class WishListAdapter extends RecyclerView.Adapter<WishListAdapter.ViewHo
                 freeCoupons.setVisibility(View.INVISIBLE);
             }
             rating.setText(averageRate);
-            totalRatings.setText(totalRatingNo + "(ratings)");
-            productPrice.setText(price);
-            cuttedPrice.setText(cuttedPriceValue);
-            paymentMethod.setText(payMethod);
+            totalRatings.setText("(" + totalRatingNo + ")"+ "ratings");
+            productPrice.setText("Rs." + price + "/-");
+            cuttedPrice.setText("Rs." + cuttedPriceValue + "/-");
+            if (payMethod) {
+                paymentMethod.setVisibility(View.VISIBLE);
+            } else {
+                paymentMethod.setVisibility(View.GONE);
+            }
 
             if (wishList) {
                 deleteBtn.setVisibility(View.VISIBLE);

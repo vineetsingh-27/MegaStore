@@ -9,6 +9,7 @@ public class HomePageModel {
     public static final int GRID_PRODUCT_VIEW = 3;
 
     private int type;
+    private String backgroundColor;
 
     /**
      * Banner slider *
@@ -40,20 +41,19 @@ public class HomePageModel {
     /**
      * Strip ad Layout *
      */
-    private int resource;
-    private String backgroundColor;
+    private String resource;
 
-    public HomePageModel(int type, int resource, String backgroundColor) {
+    public HomePageModel(int type, String resource, String backgroundColor) {
         this.type = type;
         this.resource = resource;
         this.backgroundColor = backgroundColor;
     }
 
-    public int getResource() {
+    public String getResource() {
         return resource;
     }
 
-    public void setResource(int resource) {
+    public void setResource(String resource) {
         this.resource = resource;
     }
 
@@ -72,11 +72,38 @@ public class HomePageModel {
     private String title;
     private List<HorizontalProductScrollModel> horizontalProductScrollModelList;
 
-    public HomePageModel(int type, String title, List<HorizontalProductScrollModel> horizontalProductScrollModelList) {
+    //////Horizontal Product layout
+
+    private List<WishListModel> viewAllProductList;
+
+    public HomePageModel(int type, String title, String backgroundColor,List<HorizontalProductScrollModel> horizontalProductScrollModelList,List<WishListModel> viewALlProductList) {
         this.type = type;
         this.title = title;
+        this.backgroundColor = backgroundColor;
+        this.horizontalProductScrollModelList = horizontalProductScrollModelList;
+        this.viewAllProductList = viewALlProductList;
+
+    }
+
+    public List<WishListModel> getViewAllProductList() {
+        return viewAllProductList;
+    }
+
+    public void setViewAllProductList(List<WishListModel> viewAllProductList) {
+        this.viewAllProductList = viewAllProductList;
+    }
+
+    ////////////Horizontal Product layout
+
+    /////////// Grid Product layout
+    public HomePageModel(int type, String title, String backgroundColor,List<HorizontalProductScrollModel> horizontalProductScrollModelList) {
+        this.type = type;
+        this.title = title;
+        this.backgroundColor = backgroundColor;
         this.horizontalProductScrollModelList = horizontalProductScrollModelList;
     }
+
+    ///////// Grid Product layout
 
     public String getTitle() {
         return title;
@@ -86,6 +113,8 @@ public class HomePageModel {
         this.title = title;
     }
 
+    /////////Grid Product layout
+
     public List<HorizontalProductScrollModel> getHorizontalProductScrollModelList() {
         return horizontalProductScrollModelList;
     }
@@ -93,6 +122,5 @@ public class HomePageModel {
     public void setHorizontalProductScrollModelList(List<HorizontalProductScrollModel> horizontalProductScrollModelList) {
         this.horizontalProductScrollModelList = horizontalProductScrollModelList;
     }
-
 
 }
