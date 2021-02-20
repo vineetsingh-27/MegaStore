@@ -33,20 +33,16 @@ public class SignInFragment extends Fragment {
 
     private TextView dontHaveAnAccount;
     private FrameLayout parentFrameLayout;
-
     private EditText email;
     private EditText password;
-
     private TextView forgotPassword;
-
     private ImageButton closeBtn;
     private Button signInBtn;
-
     private ProgressBar progressBar;
-
     private FirebaseAuth firebaseAuth;
-
     private String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+.[a-z]+";
+
+    public static boolean disableCloseBtn = false;
 
     public SignInFragment() {
         // Required empty public constructor
@@ -60,18 +56,19 @@ public class SignInFragment extends Fragment {
 
         dontHaveAnAccount = view.findViewById(R.id.tv_dont_have_an_account);
         parentFrameLayout = getActivity().findViewById(R.id.register_frameLayout);
-
         email = view.findViewById(R.id.sign_in_email);
         password = view.findViewById(R.id.sign_in_password);
-
         forgotPassword = view.findViewById(R.id.tv_forgot_password);
-
         closeBtn = view.findViewById(R.id.sign_in_close_btn);
         signInBtn = view.findViewById(R.id.sign_in_btn);
-
         firebaseAuth = FirebaseAuth.getInstance();
-
         progressBar = view.findViewById(R.id.sign_in_progressBar);
+
+        if (disableCloseBtn) {
+            closeBtn.setVisibility(View.GONE);
+        } else {
+            closeBtn.setVisibility(View.VISIBLE);
+        }
 
         return view;
     }
@@ -201,8 +198,12 @@ public class SignInFragment extends Fragment {
     }
 
     private void mainIntent() {
-        Intent mainIntent = new Intent(getActivity(), MainActivity.class);
-        startActivity(mainIntent);
+        if (disableCloseBtn) {
+            disableCloseBtn = false;
+        } else {
+            Intent mainIntent = new Intent(getActivity(), MainActivity.class);
+            startActivity(mainIntent);
+        }
         getActivity().finish();
     }
 }

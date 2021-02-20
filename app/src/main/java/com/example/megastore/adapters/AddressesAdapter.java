@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.megastore.R;
 import com.example.megastore.model.AddressesModel;
+import com.example.megastore.views.DBQueries;
 
 import java.util.List;
 
@@ -24,11 +25,12 @@ public class AddressesAdapter extends RecyclerView.Adapter<AddressesAdapter.View
 
     private List<AddressesModel> addressesModelList;
     private int MODE;
-    private int preSelectedPosition = -1;
+    private int preSelectedPosition;
 
     public AddressesAdapter(List<AddressesModel> addressesModelList, int MODE) {
         this.addressesModelList = addressesModelList;
         this.MODE = MODE;
+        preSelectedPosition = DBQueries.selectedAddress;
     }
 
     @NonNull
@@ -41,10 +43,11 @@ public class AddressesAdapter extends RecyclerView.Adapter<AddressesAdapter.View
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         String name = addressesModelList.get(position).getFullname();
+        String mobileNo = addressesModelList.get(position).getMobileNo();
         String address = addressesModelList.get(position).getAddress();
         String pincode = addressesModelList.get(position).getPincode();
         Boolean selected = addressesModelList.get(position).getSelected();
-        holder.setData(name, address, pincode, selected, position);
+        holder.setData(name, address, pincode, selected, position, mobileNo);
 
     }
 
@@ -71,8 +74,8 @@ public class AddressesAdapter extends RecyclerView.Adapter<AddressesAdapter.View
             optionContainer = itemView.findViewById(R.id.option_container);
         }
 
-        private void setData(String username, String userAddress, String userPincode, final Boolean selected, final int position) {
-            fullname.setText(username);
+        private void setData(String username, String userAddress, String userPincode, final Boolean selected, final int position, String mobileNo) {
+            fullname.setText(username + " - " + mobileNo);
             address.setText(userAddress);
             pincode.setText(userPincode);
 
@@ -92,6 +95,7 @@ public class AddressesAdapter extends RecyclerView.Adapter<AddressesAdapter.View
                             addressesModelList.get(preSelectedPosition).setSelected(false);
                             refreshItem(preSelectedPosition, position);
                             preSelectedPosition = position;
+                            DBQueries.selectedAddress = position;
                         }
                     }
                 });

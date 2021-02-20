@@ -1,6 +1,7 @@
 package com.example.megastore.model;
 
 public class WishListModel {
+    private String productId;
     private String productImage;
     private String productTitle;
     private long freeCoupons;
@@ -9,8 +10,10 @@ public class WishListModel {
     private String productPrice;
     private String cuttedPrice;
     private boolean paymentMethod;
+    private boolean inStock;
 
-    public WishListModel(String productImage, String productTitle, long freeCoupons, String rating, long totalRatings, String productPrice, String cuttedPrice, boolean paymentMethod) {
+    public WishListModel(String productId, String productImage, String productTitle, long freeCoupons, String rating, long totalRatings, String productPrice, String cuttedPrice, boolean paymentMethod, boolean inStock) {
+        this.productId = productId;
         this.productImage = productImage;
         this.productTitle = productTitle;
         this.freeCoupons = freeCoupons;
@@ -19,6 +22,15 @@ public class WishListModel {
         this.productPrice = productPrice;
         this.cuttedPrice = cuttedPrice;
         this.paymentMethod = paymentMethod;
+        this.inStock = inStock;
+    }
+
+    public String getProductId() {
+        return productId;
+    }
+
+    public void setProductId(String productId) {
+        this.productId = productId;
     }
 
     public String getProductImage() {
@@ -83,5 +95,13 @@ public class WishListModel {
 
     public void setPaymentMethod(boolean paymentMethod) {
         this.paymentMethod = paymentMethod;
+    }
+
+    public boolean isInStock() {
+        return inStock;
+    }
+
+    public void setInStock(boolean inStock) {
+        this.inStock = inStock;
     }
 }

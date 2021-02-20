@@ -7,6 +7,7 @@ public class HomePageModel {
     public static final int STRIP_AD_BANNER = 1;
     public static final int HORIZONTAL_PRODUCT_VIEW = 2;
     public static final int GRID_PRODUCT_VIEW = 3;
+    public static final int VERTICAL_PRODUCT_VIEW = 4;
 
     private int type;
     private String backgroundColor;
@@ -76,7 +77,7 @@ public class HomePageModel {
 
     private List<WishListModel> viewAllProductList;
 
-    public HomePageModel(int type, String title, String backgroundColor,List<HorizontalProductScrollModel> horizontalProductScrollModelList,List<WishListModel> viewALlProductList) {
+    public HomePageModel(int type, String title, String backgroundColor, List<HorizontalProductScrollModel> horizontalProductScrollModelList, List<WishListModel> viewALlProductList) {
         this.type = type;
         this.title = title;
         this.backgroundColor = backgroundColor;
@@ -96,7 +97,7 @@ public class HomePageModel {
     ////////////Horizontal Product layout
 
     /////////// Grid Product layout
-    public HomePageModel(int type, String title, String backgroundColor,List<HorizontalProductScrollModel> horizontalProductScrollModelList) {
+    public HomePageModel(int type, String title, String backgroundColor, List<HorizontalProductScrollModel> horizontalProductScrollModelList) {
         this.type = type;
         this.title = title;
         this.backgroundColor = backgroundColor;
@@ -104,7 +105,6 @@ public class HomePageModel {
     }
 
     ///////// Grid Product layout
-
     public String getTitle() {
         return title;
     }
@@ -112,7 +112,6 @@ public class HomePageModel {
     public void setTitle(String title) {
         this.title = title;
     }
-
     /////////Grid Product layout
 
     public List<HorizontalProductScrollModel> getHorizontalProductScrollModelList() {
@@ -123,4 +122,21 @@ public class HomePageModel {
         this.horizontalProductScrollModelList = horizontalProductScrollModelList;
     }
 
+    ////////Vertical Product Layout
+
+    private List<VerticalProductScrollModel> verticalProductScrollModelList;
+
+    public HomePageModel(int type, String title, List<VerticalProductScrollModel> verticalProductScrollModelList) {
+        this.type = type;
+        this.title = title;
+        this.verticalProductScrollModelList = verticalProductScrollModelList;
+    }
+
+    public List<VerticalProductScrollModel> getVerticalProductScrollModelList() {
+        return verticalProductScrollModelList;
+    }
+
+    public void setVerticalProductScrollModelList(List<VerticalProductScrollModel> verticalProductScrollModelList) {
+        this.verticalProductScrollModelList = verticalProductScrollModelList;
+    }
 }

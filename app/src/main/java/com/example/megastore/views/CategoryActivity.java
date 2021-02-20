@@ -16,13 +16,19 @@ import com.example.megastore.adapters.HomePageAdapter;
 import com.example.megastore.model.HomePageModel;
 import com.example.megastore.model.HorizontalProductScrollModel;
 import com.example.megastore.model.SliderModel;
+import com.example.megastore.model.WishListModel;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.example.megastore.views.DBQueries.lists;
+import static com.example.megastore.views.DBQueries.loadFragmentData;
+import static com.example.megastore.views.DBQueries.loadedCategoriesName;
+
 public class CategoryActivity extends AppCompatActivity {
 
     private RecyclerView categoryRecyclerView;
+    private List<HomePageModel> homePageModelFakeList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,18 +41,52 @@ public class CategoryActivity extends AppCompatActivity {
         getSupportActionBar().setTitle(title);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+        ////home page fake list
+        HomePageAdapter adapter;
+        List<SliderModel> sliderModelFakeList = new ArrayList<>();
+        sliderModelFakeList.add(new SliderModel("null", "#ffffff"));
+        sliderModelFakeList.add(new SliderModel("null", "#ffffff"));
+        sliderModelFakeList.add(new SliderModel("null", "#ffffff"));
+        sliderModelFakeList.add(new SliderModel("null", "#ffffff"));
+        sliderModelFakeList.add(new SliderModel("null", "#ffffff"));
+
+        List<HorizontalProductScrollModel> horizontalProductScrollModelFakeList = new ArrayList<>();
+        horizontalProductScrollModelFakeList.add(new HorizontalProductScrollModel("", "", "", "", ""));
+        horizontalProductScrollModelFakeList.add(new HorizontalProductScrollModel("", "", "", "", ""));
+        horizontalProductScrollModelFakeList.add(new HorizontalProductScrollModel("", "", "", "", ""));
+        horizontalProductScrollModelFakeList.add(new HorizontalProductScrollModel("", "", "", "", ""));
+        horizontalProductScrollModelFakeList.add(new HorizontalProductScrollModel("", "", "", "", ""));
+        horizontalProductScrollModelFakeList.add(new HorizontalProductScrollModel("", "", "", "", ""));
+        horizontalProductScrollModelFakeList.add(new HorizontalProductScrollModel("", "", "", "", ""));
+
+        homePageModelFakeList.add(new HomePageModel(0, sliderModelFakeList));
+        homePageModelFakeList.add(new HomePageModel(1, "", "#ffffff"));
+        homePageModelFakeList.add(new HomePageModel(2, "", "#ffffff", horizontalProductScrollModelFakeList, new ArrayList<WishListModel>()));
+        homePageModelFakeList.add(new HomePageModel(3, "", "#ffffff", horizontalProductScrollModelFakeList));
+        ////home page fake list
+
         categoryRecyclerView = findViewById(R.id.category_recycler_view);
-
-
         LinearLayoutManager testingLayoutManager = new LinearLayoutManager(this);
         testingLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         categoryRecyclerView.setLayoutManager(testingLayoutManager);
 
+        adapter = new HomePageAdapter(homePageModelFakeList);
 
-        List<HomePageModel> homePageModelList = new ArrayList<>();
-        HomePageAdapter homePageAdapter = new HomePageAdapter(homePageModelList);
-        categoryRecyclerView.setAdapter(homePageAdapter);
-        homePageAdapter.notifyDataSetChanged();
+        int listPosition = 0;
+        for (int x = 0; x < loadedCategoriesName.size(); x++) {
+            if (loadedCategoriesName.get(x).equals(title.toUpperCase())) {
+                listPosition = x;
+            }
+        }
+        if (listPosition == 0) {
+            loadedCategoriesName.add(title.toUpperCase());
+            lists.add(new ArrayList<HomePageModel>());
+            loadFragmentData(categoryRecyclerView, this, loadedCategoriesName.size() - 1, title);
+        } else {
+            adapter = new HomePageAdapter(lists.get(listPosition));
+        }
+        categoryRecyclerView.setAdapter(adapter);
+        adapter.notifyDataSetChanged();
     }
 
     @Override

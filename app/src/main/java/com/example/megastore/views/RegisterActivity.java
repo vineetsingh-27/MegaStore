@@ -1,15 +1,14 @@
 package com.example.megastore.views;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
-
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.widget.FrameLayout;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
+
 import com.example.megastore.R;
-import com.example.megastore.views.SignInFragment;
 
 public class RegisterActivity extends AppCompatActivity {
     private FrameLayout frameLayout;
@@ -34,6 +33,8 @@ public class RegisterActivity extends AppCompatActivity {
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
+            SignInFragment.disableCloseBtn = false;
+            SignUpFragment.disableCloseBtn = false;
             if (onResetPasswordFragment) {
                 onResetPasswordFragment = false;
                 setFragment(new SignInFragment());
